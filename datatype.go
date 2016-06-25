@@ -105,6 +105,9 @@ func packDataValue(value interface{}, dvalue *C.DataValue, engine *Engine, owner
 	case *Common:
 		dvalue.dataType = C.DTObject
 		*(*unsafe.Pointer)(datap) = value.addr
+	case QmlModel:
+		dvalue.dataType = C.DTObject
+		*(*unsafe.Pointer)(datap) = value.addr(value, engine)
 	case color.RGBA:
 		dvalue.dataType = C.DTColor
 		*(*uint32)(datap) = uint32(value.A)<<24 | uint32(value.R)<<16 | uint32(value.G)<<8 | uint32(value.B)

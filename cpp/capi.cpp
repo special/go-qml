@@ -11,6 +11,7 @@
 #include "govaluetype.h"
 #include "connector.h"
 #include "capi.h"
+#include "gomodelinterface.h"
 
 static char *local_strdup(const char *str)
 {
@@ -869,6 +870,12 @@ void registerResourceData(int version, char *tree, char *name, char *data)
 void unregisterResourceData(int version, char *tree, char *name, char *data)
 {
     qUnregisterResourceData(version, (unsigned char*)tree, (unsigned char*)name, (unsigned char*)data);
+}
+
+// XXX owner
+QObject_ *createModel()
+{
+    return new GoModelInterface();
 }
 
 // vim:ts=4:sw=4:et:ft=cpp

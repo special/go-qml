@@ -202,6 +202,11 @@ void hookListPropertyClear(GoAddr *addr, intptr_t reflectIndex, intptr_t setInde
 void registerResourceData(int version, char *tree, char *name, char *data);
 void unregisterResourceData(int version, char *tree, char *name, char *data);
 
+QObject_ *createModel();
+int hookModelRowCount(void *model);
+void hookModelRoleNames(void *model, DataValue *re);
+void hookModelData(void *model, int row, int role, DataValue *re);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
