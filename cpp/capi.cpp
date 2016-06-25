@@ -878,4 +878,40 @@ QObject_ *createModel()
     return new GoModelInterface();
 }
 
+void beginResetModel(void *model)
+{
+    reinterpret_cast<GoModelInterface*>(model)->beginResetModel();
+}
+
+void endResetModel(void *model)
+{
+    reinterpret_cast<GoModelInterface*>(model)->endResetModel();
+}
+
+void beginInsertRows(void *model, int start, int end)
+{
+    reinterpret_cast<GoModelInterface*>(model)->beginInsertRows(QModelIndex(), start, end);
+}
+
+void endInsertRows(void *model)
+{
+    reinterpret_cast<GoModelInterface*>(model)->endInsertRows();
+}
+
+void beginRemoveRows(void *model, int start, int end)
+{
+    reinterpret_cast<GoModelInterface*>(model)->beginRemoveRows(QModelIndex(), start, end);
+}
+
+void endRemoveRows(void *model)
+{
+    reinterpret_cast<GoModelInterface*>(model)->endRemoveRows();
+}
+
+void modelDataChanged(void *model, int start, int end)
+{
+    GoModelInterface *m = reinterpret_cast<GoModelInterface*>(model);
+    m->dataChanged(m->index(start, 0), m->index(end, 0));
+}
+
 // vim:ts=4:sw=4:et:ft=cpp

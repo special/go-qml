@@ -207,6 +207,14 @@ int hookModelRowCount(void *model);
 void hookModelRoleNames(void *model, DataValue *re);
 void hookModelData(void *model, int row, int role, DataValue *re);
 
+void beginResetModel(void *model);
+void endResetModel(void *model);
+void beginInsertRows(void *model, int start, int end);
+void endInsertRows(void *model);
+void beginRemoveRows(void *model, int start, int end);
+void endRemoveRows(void *model);
+void modelDataChanged(void *model, int start, int end);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

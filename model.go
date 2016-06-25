@@ -20,6 +20,16 @@ type QmlModel interface {
 	addr(impl QmlModel, engine *Engine) unsafe.Pointer
 	engine() *Engine
 
+	// Modification signals
+	BeginResetModel()
+	EndResetModel()
+	BeginInsertRows(start, end int)
+	EndInsertRows()
+	BeginRemoveRows(start, end int)
+	EndRemoveRows()
+	DataChanged(start, end int)
+
+	// Abstract API
 	RowCount() int
 	RoleNames() map[int]string
 	Data(row, role int) interface{}
@@ -40,6 +50,48 @@ func (this *QmlModelBase) addr(impl QmlModel, engine *Engine) unsafe.Pointer {
 
 func (this *QmlModelBase) engine() *Engine {
 	return this._engine
+}
+
+func (this *QmlModelBase) BeginResetModel() {
+	RunMain(func() {
+		C.beginResetModel(this._addr)
+	})
+}
+
+func (this *QmlModelBase) EndResetModel() {
+	RunMain(func() {
+		C.endResetModel(this._addr)
+	})
+}
+
+func (this *QmlModelBase) BeginInsertRows(start, end int) {
+	RunMain(func() {
+		C.beginInsertRows(this._addr, C.int(start), C.int(end))
+	})
+}
+
+func (this *QmlModelBase) EndInsertRows() {
+	RunMain(func() {
+		C.endInsertRows(this._addr)
+	})
+}
+
+func (this *QmlModelBase) BeginRemoveRows(start, end int) {
+	RunMain(func() {
+		C.beginRemoveRows(this._addr, C.int(start), C.int(end))
+	})
+}
+
+func (this *QmlModelBase) EndRemoveRows() {
+	RunMain(func() {
+		C.endRemoveRows(this._addr)
+	})
+}
+
+func (this *QmlModelBase) DataChanged(start, end int) {
+	RunMain(func() {
+		C.modelDataChanged(this._addr, C.int(start), C.int(end))
+	})
 }
 
 //export hookModelRowCount
